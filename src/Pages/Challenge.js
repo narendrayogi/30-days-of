@@ -9,119 +9,119 @@ import { useStore } from "../store";
 function Challenge() {
   const { name } = useParams();
   const store = useStore();
-  const [showAdd, setShowAdd] = useState(false);
+  const [showAdd, setShowAdd] = useState( false );
 
-  useEffect(() => {
-    store.getChallenge(name);
+  useEffect( () => {
+    store.getChallenge( name );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [] );
 
-  const addEntry = async (e) => {
-    setShowAdd(false);
-    store.refetchChallenge(name);
+  const addEntry = async ( e ) => {
+    setShowAdd( false );
+    store.refetchChallenge( name );
   };
 
   const todayExists =
     store.currentPageData &&
-    store.currentPageData.items.find((item) => {
+    store.currentPageData.items.find( ( item ) => {
       if (
-        new Date().getMonth() === new Date(item.date).getMonth() &&
-        new Date().getDay() === new Date(item.date).getDay()
+        new Date().getMonth() === new Date( item.date ).getMonth() &&
+        new Date().getDay() === new Date( item.date ).getDay()
       ) {
         return false;
       }
 
       return false;
-    });
+    } );
 
   return (
-    <div class="bg-gray-100 ">
-      <main class="mb-12 max-w-6xl mx-auto sm:px-6 lg:px-20 pt-8 bg-gray-100 h-full">
-        <h1 class="mb-8">
-          <span class="block text-base text-center text-indigo-600 font-semibold tracking-wide uppercase">
+    <div className="bg-gray-100 ">
+      <main className="mb-12 max-w-6xl mx-auto sm:px-6 lg:px-20 pt-8 bg-gray-100 h-full">
+        <h1 className="mb-8">
+          <span className="block text-base text-center text-indigo-600 font-semibold tracking-wide uppercase">
             30 days of ...
           </span>
-          <span class="mt-2 block text-3xl text-center leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl capitalize">
-            {name.split("-").join(" ")}
+          <span className="mt-2 block text-3xl text-center leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl capitalize">
+            { name.split( "-" ).join( " " ) }
           </span>
         </h1>
-        {store.currentPageData ? (
+        { store.currentPageData ? (
           <>
             <h2 className="mt-6 block text-base text-center text-indigo-600 font-semibold tracking-wide uppercase">
               Posts
             </h2>
             <h3 className="text-center">
-              Started:{" "}
-              {format(new Date(store.currentPageData.date), "dd MMMM yyyy")}
+              Started:{ " " }
+              { format( new Date( store.currentPageData.date ), "dd MMMM yyyy" ) }
             </h3>
             <h3 className="text-center">
-              Ends:{" "}
-              {format(
-                new Date(store.currentPageData.finalDate),
+              Ends:{ " " }
+              { format(
+                new Date( store.currentPageData.finalDate ),
                 "dd MMMM yyyy"
-              )}
+              ) }
             </h3>
-            {!todayExists && isAdmin() ? (
+            { !todayExists && isAdmin() ? (
               <button
-                class=" mt-6 flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className=" mt-6 flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 type="button"
-                onClick={() => setShowAdd(true)}
+                onClick={ () => setShowAdd( true ) }
               >
-                Add Entry for {format(new Date(), "dd MMMM")}
+                Add Entry for {format( new Date(), "dd MMMM" ) }
               </button>
-            ) : null}
-            {showAdd ? <AddEntry onSubmit={addEntry} /> : null}
+            ) : null }
+            { showAdd ? <AddEntry onSubmit={ addEntry } /> : null }
 
-            {store.currentPageData.items.length ? (
-              <ul class="space-y-3 mt-10">
-                {store.currentPageData.items.reverse().map((ch) => (
-                  <li class="bg-white shadow overflow-hidden rounded-md px-6 py-4 ">
-                    <div class="flex items-center justify-between mb-2">
-                      <h6 class="text-lg leading-6 font-medium text-gray-900 capitalize">
-                        {ch.name}
+            { store.currentPageData.items.length ? (
+              <ul className="space-y-3 mt-10">
+                {store.currentPageData.items.reverse().map( ( ch ) => (
+                  <li className="bg-white shadow overflow-hidden rounded-md px-6 py-4 ">
+                    <div className="flex items-center justify-between mb-2">
+                      <h6 className="text-lg leading-6 font-medium text-gray-900 capitalize">
+                        { ch.name }
                       </h6>
-                      <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                        {format(new Date(ch.date), "dd MMMM")}
+                      <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                        { format( new Date( ch.date ), "dd MMMM" ) }
                       </span>
                     </div>
-                    {ch.description && <p className="mb-2">{ch.description}</p>}
+                    {ch.description && <p className="mb-2">{ ch.description }</p> }
                     {ch.image.length
-                      ? ch.image.map((image) => (
-                          <img
-                            src={image}
-                            className="m-auto block mb-2"
-                            alt={ch.name}
-                          />
-                        ))
-                      : null}
+                      ? ch.image.map( ( image ) => (
+                        <img
+                          src={ image }
+                          className="m-auto block mb-2"
+                          alt={ ch.name }
+                        />
+                      ) )
+                      : null }
                     {ch.url ? (
-                      <a target="_blank" rel="noreferrer" href={ch.url}>
-                        {ch.url}
+                      <a target="_blank" rel="noreferrer" href={ ch.url }>
+                        {ch.url }
                       </a>
-                    ) : null}
+                    ) : null }
                     {ch.sandbox ? (
                       <iframe
-                        src={`https://codesandbox.io/embed/${ch.sandbox}?fontsize=14&hidenavigation=1&theme=dark&view=preview`}
-                        style={{
+                        src={ `https://codesandbox.io/embed/${ ch.sandbox }?fontsize=14&hidenavigation=1&theme=dark&view=preview` }
+                        style={ {
                           width: "100%",
                           height: 500,
                           border: 0,
                           borderRadius: 4,
                           overflow: "hidden",
-                        }}
+                        } }
                         title="twitter-embed (forked)"
                         allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
                         sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
                       ></iframe>
-                    ) : null}
+                    ) : null }
                   </li>
-                ))}
+                ) ) }
               </ul>
-            ) : null}
+            ) : null }
           </>
         ) : (
-          <Loading />
-        )}
+            <Loading />
+          ) }
       </main>
     </div>
   );

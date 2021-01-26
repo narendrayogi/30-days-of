@@ -4,82 +4,82 @@ import { useNavigate } from "react-router-dom";
 import urlify from "urlify";
 import { useStore } from "../store";
 
-var clean = urlify.create({
+var clean = urlify.create( {
   addEToUmlauts: true,
   szToSs: true,
   spaces: "-",
   nonPrintable: "-",
   trim: true,
-});
+} );
 
 const toDateInputValue = () => {
   var local = new Date();
-  local.setMinutes(local.getMinutes() - local.getTimezoneOffset());
-  return local.toJSON().slice(0, 10);
+  local.setMinutes( local.getMinutes() - local.getTimezoneOffset() );
+  return local.toJSON().slice( 0, 10 );
 };
 const AddChallengeForm = () => {
   let navigate = useNavigate();
   const store = useStore();
-  const [data, setData] = useState({
+  const [data, setData] = useState( {
     name: "",
     date: toDateInputValue(),
-  });
+  } );
 
-  const submit = async (e) => {
+  const submit = async ( e ) => {
     e.preventDefault();
-    const name = clean(data.name.toLowerCase());
-    await store.addChallenge(name, data);
-    navigate("/challenges/" + name);
+    const name = clean( data.name.toLowerCase() );
+    await store.addChallenge( name, data );
+    navigate( "/challenges/" + name );
   };
 
   return (
-    <form class="mt-6" onSubmit={submit}>
-      <div class="mb-2">
-        <label for="name" class="block text-sm font-medium text-gray-700">
+    <form className="mt-6" onSubmit={ submit }>
+      <div className="mb-2">
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
           Challenge Name
         </label>
-        <div class="mt-1">
+        <div className="mt-1">
           <input
-            value={data.name}
-            onChange={(e) =>
-              setData((data) => ({
+            value={ data.name }
+            onChange={ ( e ) =>
+              setData( ( data ) => ( {
                 ...data,
                 name: e.target.value,
-              }))
+              } ) )
             }
             required
             type="text"
             name="name"
             id="name"
-            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
             placeholder="3D Modelling"
           />
         </div>
       </div>
       <div>
-        <label for="date" class="block text-sm font-medium text-gray-700">
+        <label htmlFor="date" className="block text-sm font-medium text-gray-700">
           Start Date
         </label>
-        <div class="mt-1">
+        <div className="mt-1">
           <input
             required
-            value={data.date}
-            onChange={(e) =>
-              setData((data) => ({
+            value={ data.date }
+            onChange={ ( e ) =>
+              setData( ( data ) => ( {
                 ...data,
                 date: e.target.value,
-              }))
+              } ) )
             }
             type="date"
             name="date"
             id="date"
-            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
             placeholder="you@example.com"
           />
         </div>
       </div>
       <button
-        class="inline-flex items-center px-3 py-2 border mt-4 border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="inline-flex items-center px-3 py-2 border mt-4 border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         type="submit"
       >
         Create
